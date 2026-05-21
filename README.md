@@ -1,23 +1,23 @@
 # Custom-AI-Assistants
 
-Átfogó összehasonlító útmutató az egyedi MI-asszisztensekhez: OpenAI Custom GPTs, Google Gems, Anthropic Claude Projects, Microsoft Copilot Agents és további platformok. Rendszerprompttól a tudásbázis-kezelésen át a GitHub-integrációig — minden, ami a megfelelő eszköz kiválasztásához és hatékony konfigurálásához szükséges.
+A no-fluff comparison guide to custom AI assistants: OpenAI Custom GPTs, Google Gems, Anthropic Claude Projects, Microsoft Copilot Agents, and more. From system prompts to knowledge base management and GitHub integration — everything you need to pick the right tool and configure it to actually work.
 
 ---
 
-## Mi ez a projekt?
+## What is this?
 
-A generatív AI területén minden nagyobb platform saját megnevezéssel látja el az egyedi asszisztens-funkcióját (GPTs, Gems, Projects, Agents). Ez a repo összegyűjti és összehasonlítja ezeket a megoldásokat, segít az eligazodásban, és megmutatja, melyik mire alkalmas valójában.
+Every major AI platform ships its own flavor of "custom assistant" under a different name. This repo cuts through the branding, compares what each platform actually does, and tells you which one fits your use case.
 
-Az összes eszköz ugyanazon az elven alapul:
+All of them run on the same stack:
 
-**Alapmodell (LLM)** + **System Prompt** + **Tudásbázis (fájlok)** + **Eszközök / Actions (opcionális)**
+**Base model (LLM)** + **System Prompt** + **Knowledge base (files)** + **Tools / Actions (optional)**
 
 ---
 
-## Platformok és elnevezések
+## Platforms and naming
 
-| # | Gyártó | Eszköz megnevezése |
-|:--|:-------|:-------------------|
+| # | Vendor | Product name |
+|:--|:-------|:-------------|
 | 1 | OpenAI | Custom GPTs · GPT Builder |
 | 2 | Google | Gems · Gemini |
 | 3 | Anthropic | Claude Projects |
@@ -31,39 +31,38 @@ Az összes eszköz ugyanazon az elven alapul:
 
 ---
 
-## Technikai szempontok
+## Technical considerations
 
-### Rendszerprompt mérete és struktúrája
+### System prompt size and structure
 
-Biztonságos méret: **8k–16k karakter**. A lényeg nem a hossz, hanem a struktúra — XML-tagek (`<task>`, `<rules>`) használata javítja a modell viselkedésének konzisztenciáját.
+Safe range: **8k–16k characters**. Length is not the bottleneck — structure is. Using XML tags (`<task>`, `<rules>`) keeps model behavior consistent and predictable.
 
-> **Fontos:** a Description mező csak felhasználói tájékoztatásra (marketing) való — ne kerüljenek bele instrukciók. A szabályok az *Instructions* mezőbe, a tudásanyag a feltöltött *Knowledge* fájlokba kerüljön.
+> **Note:** The Description field is marketing copy for the end user — not the place for instructions. Rules go in *Instructions*. Reference material goes in uploaded *Knowledge* files.
 
-### GitHub RAW fájl integráció
+### GitHub RAW file integration
 
-Egyik consumer platform sem támogat natív, élő szinkront GitHub RAW linkekből. Három megközelítés létezik:
+No consumer platform natively syncs live from a GitHub RAW URL. Three approaches exist:
 
-1. **Fájlfeltöltés (legegyszerűbb):** Töltsd le `.md` vagy `.txt` formátumban és töltsd fel tudásbázisként. Stabil, gyors.
-2. **API Action (haladó):** Egy kis szerver letölti a GitHub tartalmat, amelyet a bot API-n keresztül hív meg — mindig a legfrissebb verzió érhető el.
-3. **Self-hosted (Dify / LangGraph):** Minden kérésnél egy HTTP Request node hívja le a RAW tartalmat. A legprofibb megoldás verziózott promptokhoz.
+1. **File upload (simplest):** Download your prompt as `.md` or `.txt` and upload it as a Knowledge file. Stable and fast.
+2. **API Action (advanced):** A lightweight server fetches the GitHub content on demand — the bot calls it via Action, always pulling the latest version.
+3. **Self-hosted (Dify / LangGraph):** An HTTP Request node fetches the RAW content on every call. The right move if your prompt lives in version control and needs to stay there.
 
 ---
 
-## Melyiket válaszd?
+## Which one should you use?
 
-| Ha a cél → | Ajánlott platform | Miért? |
-|:-----------|:------------------|:-------|
-| Egyszerűség, széles ökoszisztéma | **OpenAI Custom GPTs** | Legnagyobb GPT Store, legtöbb dokumentáció, Actions (API) integráció |
-| Hosszú dokumentumok, kódelemzés | **Anthropic Claude Projects** | 200k tokenes kontextus, kiváló fájlkezelés, kutatási feladatokra ideális |
-| Vállalati Microsoft-környezet | **Copilot Agents / Copilot Studio** | Natív M365 integráció (Word, Excel, Teams) |
-| Google Workspace-integráció | **Gemini Gems** | Natív Drive és Gmail szinkron, legegyszerűbb élmény Google-felhasználóknak |
-| GitHub-verziózott promptok | **Dify vagy LangGraph** | A prompt a repóban lakik, minden kérésnél injektálva — auditálható, tesztelhető |
-| Teljes kontroll, SaaS nélkül | **Open-WebUI / Flowise / Dify** | Self-hosted, igazi workflow-építés, zárt rendszertől független |
+| Goal | Recommended | Why |
+|:-----|:------------|:----|
+| Simplicity, broad ecosystem | **OpenAI Custom GPTs** | Largest GPT Store, most community docs, Actions (API) support |
+| Long documents, code analysis | **Anthropic Claude Projects** | 200k token context window, strong file handling, built for research and analysis |
+| Enterprise Microsoft environment | **Copilot Agents / Copilot Studio** | Native M365 integration — Word, Excel, Teams, SharePoint |
+| Google Workspace users | **Gemini Gems** | Native Drive and Gmail sync, lowest friction for Google-native workflows |
+| Git-versioned prompts | **Dify or LangGraph** | Prompt lives in your repo, injected on every call — auditable and testable |
+| Full control, no SaaS lock-in | **Open-WebUI / Flowise / Dify** | Self-hosted, real workflow automation, no platform dependency |
 
 ---
 
 *CC BY-NC-SA 4.0 · NullCodeLabs*
-
 
 # Custom-AI-Assistants
 Definitive guide to Custom AI Agents (GPTs, Gems, Claude Projects, Copilot). Explore how to extend LLMs with custom system prompts, knowledge bases, and tools (actions/API) to build specialized, persona-driven assistants. Comparison of top platforms and use-case recommendations for developers and power users.
